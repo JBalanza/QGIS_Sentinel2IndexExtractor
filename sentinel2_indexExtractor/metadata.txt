@@ -1,0 +1,39 @@
+# This file contains metadata for your plugin. Since 
+# version 2.0 of QGIS this is the proper way to supply 
+# information about a plugin. The old method of 
+# embedding metadata in __init__.py will 
+# is no longer supported since version 2.0.
+
+# This file should be included when you package your plugin.# Mandatory items:
+
+[general]
+name=Sentinel-2 Index Extractor
+qgisMinimumVersion=3.0
+description=This plug-in extracts several Vegetal Index from Sentinel-2 data
+version=1.0
+author=Javier Balanzategui Sánchez
+email=javier.balanzategui.sanchez@alumnos.upm.es
+
+about=This plug-in extracts several Vegetation Index from Sentinel-2 data. It only needs .zip product of Sentinel-2 data from the place of your choice. As output it will create on your navigator view, the photographs of Vegetal Indexes chosen.
+
+tracker=https://github.com/JBalanza/QGIS_Sentinel2IndexExtractor
+repository=https://github.com/JBalanza/QGIS_Sentinel2IndexExtractor
+# End of mandatory metadata
+
+# Recommended items:
+
+# Uncomment the following line and add your changelog:
+# changelog=
+
+# Tags are comma separated with spaces allowed
+tags=python, sentinel, esa, spectral, index, vegetation
+
+homepage=http://homepage
+category=Plugins
+icon=icon.png
+# experimental flag
+experimental=True
+
+# deprecated flag (applies to the whole plugin, not just a single version)
+deprecated=False
+
