@@ -616,11 +616,12 @@ class SpectralIndexes:
 
 		with open(output_file, 'w') as f:
 			its = range(len(im))
+			f.write("X-Coordinate, Y-Coordinate, index-value\n")
 			for i in its:
-				for j in its:
+				lenY = len(im[i])
+				for j in range(lenY):
 					Cx,Cy = Pix2Coord(self.geoTransform,i,j)
-					#show_message(str(Cx)+"\t"+str(Cy)+"\n"+str(i)+"\t"+str(j))
-					f.write(str(Cx)+"\t"+","+"\t"+str(Cy)+"\t"+","+"\t"+str(im[i][j])+"\n")
+					f.write(str(Cx)+", "+str(Cy)+", "+str(im[i][j])+"\n")
 		
 
 	def saveImages(self, im, numberOfBands,title):
@@ -677,9 +678,6 @@ class SpectralIndexes:
 
 
 			self.geoTransform = (self.puntos.ulx, self.geoTransform[1],self.geoTransform[2],self.puntos.uly,self.geoTransform[4],self.geoTransform[5])
-			#show_message(str(self.puntos.ulx)+' '+str(self.puntos.uly)+'\n'+str(self.puntos.lrx)+' '+str(self.puntos.lry)+
-			#	'\n\n'+str(self.xmin)+' '+str(self.ymin)+'\n'+str(self.xmax)+' '+str(self.ymax))
-
 
 	
 	#Returns coordinates from original image (big frame)
@@ -702,14 +700,6 @@ def Pix2Coord(geoTransform, Px,Py):
 
 #Calculates PixelX and PixelY for Coordinates Cx and Cy
 def coord2pix(lenghtBigFrame,coordinatesBigFrame,Cx,Cy):
-	#Are Cx and Cy into the bigFrame?
-	#ulpt = [coordinatesBigFrame.ulx,coordinatesBigFrame.uly]
-	#urpt = [coordinatesBigFrame.lrx,coordinatesBigFrame.uly]
-	#llpt = [coordinatesBigFrame.ulx,coordinatesBigFrame.lry]
-	#lrpt = [coordinatesBigFrame.lrx,coordinatesBigFrame.lry]
-	#if inBox([Cx,Cy],[ulpt,urpt,llpt,lrpt]) is False:
-	#	return None
-
 	#razon is mts/pix (as coordinates is given in mts)
 	razon = (coordinatesBigFrame.lrx-coordinatesBigFrame.ulx)/lenghtBigFrame
 	return int((Cx-coordinatesBigFrame.ulx)/razon), int((coordinatesBigFrame.uly-Cy)/razon)
@@ -741,7 +731,6 @@ def extract_data(route_zip):
 	route_dest = route_dest[0:-1]#same location as original
 	route_dest = "/".join(route_dest)
 
-	#TODO uncomment/coment that line
 	zip_ref.extractall(route_dest)
 
 	files = zip_ref.namelist()
@@ -772,8 +761,6 @@ def extract_data(route_zip):
 	return bands_files
 
 
-
-
 def band_index(band,bands_list_extension):
 	return bands_list_extension.index(band)
 
@@ -782,52 +769,6 @@ def getNamePackage(route):
 	st_end = st[-1].split(".")
 
 	return "/".join(st[0:-1])+"/"+st_end[0]
-
-
-# Area signada del triangulo determinado por tres puntos a,b,c. La salida es el valor numerico del area signada del triangulo abc.
-def sarea(a,b,c):#OK
-	return (((b[0]-a[0])*(c[1]-a[1]))-((b[1]-a[1])*(c[0]-a[0])))/2 #La salida es positiva si C esta a la izq del segmento
-
-# Test punto en segmento (p es un punto [x,y] y s es un segmento determinado por sus extremos [[a1,a2],[b1,b2]]. La salida es True o False.
-def inSegment(p,s):#OK
-	if ( sarea(p,s[0],s[1]) != 0):  #Si estan en la misma recta dara 0
-		return False
-	elif ( s[0][0] > s[1][0] ): #Conpruebo si C esta antes que B es decir, pertenece al segmento
-			return s[0][0] >= p[0] and s[1][0] <= p[0]
-	else:
-			return s[0][0] <= p[0] and s[1][0] >= p[0]
-
-# Test punto en triangulo. Entrada un punto p=[x,y] y un triangulo dado por una lista con sus tres vertices. Salida True o False.
-def inTriangle(p,t):#OK
-	ABP = sarea(t[0],t[1],p)
-	BCP = sarea(t[1],t[2],p)
-	CAP = sarea(t[2],t[0],p)
-
-	#print(ABP, BCP, CAP)
-	if ( ABP == 0 and BCP == 0 and CAP == 0):
-		m = min(t[0],t[1],t[2])
-		ma = max(t[0],t[1],t[2])
-		return inSegment(p, [m ,ma])
-
-	elif ( ABP <= 0 and BCP <= 0 and CAP <= 0):
-		return True
-	elif (ABP >= 0 and BCP >= 0 and CAP >= 0):
-		return True
-	else:
-		return False
-def inBox(pt, polygon):
-	pol = polygon[:]
-	while len(pol) > 3:
-		idx = floor(len(pol)/2)
-		sa = sarea(pol[0],pol[idx],pt)
-		if sa == 0:
-			return inSegment(pt,[pol[0],pol[idx]])
-		elif sa < 0:
-			pol = pol[:idx+1]
-		else:
-			pol = pol[idx-1:]
-
-	return inTriangle(pt,pol)
 
 #It shows a pop-up dialog
 def show_message(lis):

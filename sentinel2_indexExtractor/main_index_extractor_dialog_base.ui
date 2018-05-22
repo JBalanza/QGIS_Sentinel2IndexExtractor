@@ -6,17 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>585</width>
+    <width>581</width>
     <height>492</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Spectral Indexes for Sentinel-2</string>
   </property>
+  <property name="sizeGripEnabled">
+   <bool>true</bool>
+  </property>
   <widget class="QDialogButtonBox" name="button_box">
    <property name="geometry">
     <rect>
-     <x>30</x>
+     <x>0</x>
      <y>450</y>
      <width>541</width>
      <height>32</height>
@@ -46,9 +49,9 @@
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>40</y>
-     <width>161</width>
-     <height>16</height>
+     <y>35</y>
+     <width>311</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="text">
@@ -76,7 +79,7 @@
     <rect>
      <x>40</x>
      <y>190</y>
-     <width>531</width>
+     <width>501</width>
      <height>251</height>
     </rect>
    </property>
@@ -105,29 +108,14 @@
      <string/>
     </property>
    </column>
-   <column>
-    <property name="text">
-     <string/>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string/>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string/>
-    </property>
-   </column>
   </widget>
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>160</y>
-     <width>171</width>
-     <height>16</height>
+     <y>156</y>
+     <width>311</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="text">
@@ -137,10 +125,10 @@
   <widget class="QPushButton" name="pushButton_2">
    <property name="geometry">
     <rect>
-     <x>460</x>
-     <y>160</y>
-     <width>111</width>
-     <height>23</height>
+     <x>390</x>
+     <y>150</y>
+     <width>151</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="text">
@@ -151,9 +139,9 @@
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>100</y>
-     <width>101</width>
-     <height>16</height>
+     <y>96</y>
+     <width>291</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="text">
@@ -182,10 +170,10 @@
   <widget class="QCheckBox" name="checkBox">
    <property name="geometry">
     <rect>
-     <x>220</x>
-     <y>160</y>
-     <width>141</width>
-     <height>17</height>
+     <x>380</x>
+     <y>66</y>
+     <width>201</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="text">

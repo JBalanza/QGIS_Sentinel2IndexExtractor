@@ -109,11 +109,6 @@ class index_extractor:
 		self.saveCSV = False
 		self.CCCImin = None
 		self.CCCImax = None
-		#CATCH OK ON-CLICK
-		#self.dlg.button_box.button(QDialogButtonBox.Ok).clicked.connect(self.finish)
-
-		##IMPORT MODULES
-		#install_and_import('PIL')
 
 		
 
@@ -257,10 +252,7 @@ class index_extractor:
 			element = VI[row]
 
 			item = QTableWidgetItem(element[0])
-			#item.setFlags(Qt.ItemIsUserCheckable | Qt.ItemIsEnabled)
-			#item.setCheckState(Qt.Unchecked)
 
-			# .setItem(row, column, item)
 			self.dlg.tableWidget.insertRow(row)
 			self.dlg.tableWidget.setItem(row,0,item)#VI name
 			for options_n in range(len(element[1])):
@@ -294,10 +286,10 @@ class index_extractor:
 		if nameShape is "":
 			self.shapeBox = []
 			return
-		#si lo hay
+		#if exists
 		puntos = self.getShapefromLayer(nameShape)
 		if puntos is None:
-			#No coincidía el nombre
+			#name doesn't match
 			self.show_message("There is no Shape with name: "+nameShape+"\nPlease select a valid shape name or leave it blank for using all the tile")
 		else:
 			self.shapeBox= []
@@ -378,16 +370,15 @@ class index_extractor:
 
 	#It shows a pop-up dialog
 	def show_message(self, lis):
-		#lista del tipo ([el1,[op1,op2...opn]],...)
-		# o un string
-		
+		#list of type ([el1,[op1,op2...opn]],...)
+		# or string
 		if type(lis) is str:
 			QMessageBox.information(None, "Information", lis )
 
 		elif type(lis) is list:
 			el = ""
 			for i in lis:
-				el += i + '\n'# +" "+ " ".join(map(str,i[1]))+"\n"
+				el += i + '\n'
 			QMessageBox.information(None, "Information", str(el) )
 
 
@@ -584,7 +575,7 @@ class index_extractor:
 
 
 	def getShapefromLayer(self, name):
-		project = QgsProject.instance()#Si no va añadir qgis.core delante de QgsProject
+		project = QgsProject.instance()
 		dicc = project.mapLayers()
 		idn = None
 		puntosResult = []
