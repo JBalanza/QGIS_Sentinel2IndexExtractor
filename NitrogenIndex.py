@@ -589,7 +589,7 @@ class SpectralIndexes:
 		rb = ds.GetRasterBand(1)
 		Band = rb.ReadAsArray()
 		if saveMetadata:
-			self.saveMetadata(ds)
+			self.saveMetadataAndSetFrame(ds)
 		del ds
 		del rb
 
@@ -653,7 +653,7 @@ class SpectralIndexes:
 
 		return output_file
 
-	def saveMetadata(self, ds):
+	def saveMetadataAndSetFrame(self, ds):
 		self.metadata = ds.GetMetadata()
 		self.projection = ds.GetProjection()
 		self.geoTransform = ds.GetGeoTransform()
@@ -673,8 +673,8 @@ class SpectralIndexes:
 			del rb
 			del Band
 			coordinatesBigFrame = self.totalCoordinates(lenghtBigFrame)
-			self.xmin, self.ymin = coord2pix(lenghtBigFrame, coordinatesBigFrame,self.puntos.ulx,self.puntos.uly)
-			self.xmax, self.ymax = coord2pix(lenghtBigFrame, coordinatesBigFrame,self.puntos.lrx,self.puntos.lry)
+			self.xmin, self.ymin = Coord2pix(lenghtBigFrame, coordinatesBigFrame,self.puntos.ulx,self.puntos.uly)
+			self.xmax, self.ymax = Coord2pix(lenghtBigFrame, coordinatesBigFrame,self.puntos.lrx,self.puntos.lry)
 
 
 			self.geoTransform = (self.puntos.ulx, self.geoTransform[1],self.geoTransform[2],self.puntos.uly,self.geoTransform[4],self.geoTransform[5])
@@ -699,10 +699,14 @@ def Pix2Coord(geoTransform, Px,Py):
 	return (Px*razon)+ulCx, ulCy-(Py*razon)
 
 #Calculates PixelX and PixelY for Coordinates Cx and Cy
-def coord2pix(lenghtBigFrame,coordinatesBigFrame,Cx,Cy):
-	#razon is mts/pix (as coordinates is given in mts)
-	razon = (coordinatesBigFrame.lrx-coordinatesBigFrame.ulx)/lenghtBigFrame
-	return int((Cx-coordinatesBigFrame.ulx)/razon), int((coordinatesBigFrame.uly-Cy)/razon)
+def Coord2pix(lenghtBigFrame,coordinatesBigFrame,Cx,Cy):
+	#check if points are into the frame
+	if ((Cx >= coordinatesBigFrame.lrx and Cx <= coordinatesBigFrame.ulx) or (Cx <= coordinatesBigFrame.lrx and Cx >= coordinatesBigFrame.ulx)) and ((Cy >= coordinatesBigFrame.lry and Cy <= coordinatesBigFrame.uly) or (Cy <= coordinatesBigFrame.lry and Cy >= coordinatesBigFrame.uly)):
+		#razon is mts/pix (as coordinates is given in mts)
+		razon = (coordinatesBigFrame.lrx-coordinatesBigFrame.ulx)/lenghtBigFrame
+		return int((Cx-coordinatesBigFrame.ulx)/razon), int((coordinatesBigFrame.uly-Cy)/razon)
+	else:
+		show_message("ERROR: One or more of the Shape's points are not into the tile area")
 
 #Given a list of points, get ulx,uly,lrx,lry
 def getXYMinMax(lista):
@@ -755,7 +759,7 @@ def extract_data(route_zip):
 
 	zip_ref.close()
 	if len(bands_files) != len(bands_list_extension):
-		print("An error have occurred while finding spectral images format")
+		print("ERROR: An error have occurred while finding spectral images format")
 		return
 	bands_files.append(getNamePackage(route_zip))
 	return bands_files
