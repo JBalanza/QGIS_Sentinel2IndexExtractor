@@ -1,4 +1,3 @@
-<html>
 <body>
 <p class="MsoNormal">Una vez instalada la herramienta para lanzarla, deberemos
 irnos a <i style="mso-bidi-font-style:normal">Complementos&gt;Sentinel-2 Index
@@ -181,4 +180,3 @@ calculará los índices elegidos sólo para esa área.</p>
 
 <p class="MsoNormal" align="center" style="text-align:center"><br></p>
 </body>
-</html>
