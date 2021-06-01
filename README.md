@@ -10,7 +10,7 @@ Una vez instalada la herramienta, para lanzarla, deberemos irnos a Complementos>
 
 La ventana inicial está compuesta por las siguientes entradas:
 
-1. La ruta donde se encuentra almacenado el fichero comprimido (.zip) que contiene todas las imágenes y bandas de sentinel-2. Es el fichero que se descarga directamente de la plataforma de imágenes Sentinel. Dicho fichero deberá tener los siguientes requisitos:
+1. La ruta donde se encuentra almacenado el fichero comprimido (.zip) que contiene todas las imágenes y bandas de sentinel-2. Es el fichero que se descarga directamente de la plataforma de imágenes [landviewer](https://eos.com/landviewer/). Dicho fichero deberá tener los siguientes requisitos:
   * Ser un producto de Sentinel-2
   * Ser un producto de nivel 2A (producto ya corregido atmosféricamente).
 
@@ -46,4 +46,5 @@ Ahora podremos pinchar en cualquier área del mapa y generará nuestro punto, no
 
 Una vez egresados los puntos podremos ingresar el nombre del Shape en la herramienta y Ã©sta calculará los índices elegidos sólo para esa área.
 
-
+## Authors
+Los cambios en esta versión han sido realizados por Maria Florencia Altobelo (UNRC)

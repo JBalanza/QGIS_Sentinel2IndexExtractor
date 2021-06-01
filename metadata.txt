@@ -9,10 +9,10 @@
 [general]
 name=Sentinel-2 Index Extractor
 qgisMinimumVersion=3.0
-description=This plug-in extracts several Vegetal Index from Sentinel-2 data
-version=1.0
-author=Javier Balanzategui Sánchez
-email=javier.balanzategui.sanchez@alumnos.upm.es
+description=This plug-in extracts several Vegetal Index from Sentinel-2 data downloaded from landviewer (https://eos.com/landviewer/)
+version=2.0
+author=Javier Balanzategui Sánchez, Maria florencia Altobelo
+email=javier.balanzategui.sanchez@alumnos.upm.es, altobeloflorencia@gmail.com
 
 about=This plug-in extracts several Vegetation Index from Sentinel-2 data. It only needs .zip product of Sentinel-2 data from the place of your choice. As output it will create on your navigator view, the photographs of Vegetal Indexes chosen.
 

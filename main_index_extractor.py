@@ -226,24 +226,25 @@ class index_extractor:
 	def createDialog(self):
 		##ADD NEW VI AND THEIR OPTIONS##
 
-		VI = [ ["Color",["10m (B3)", "20m(B3,B6)", "60m (B1,B3,B6)"]],
-					["OTCI", ["10m (B4)", "20m (B4,B5,B6)","60m (B5,B6,B6)"]],
-					["MCARI",["10m (B3,B4)","20m (B3,B4,B5)","60m (B3,B4,B5)"]],
-					["IRECI",["10m (B4)","20m (B4,B5,B6,B7)","60m (B4,B5,B6,B7)"]],
-					["CCCI",["20m (B5,B6,B7)", "60m (B5,B6,B7)"]],
-					["NDRE",["20m (B5,B6,B7)", "60m (B5,B6,B7)"]],
-					["MTCI", ["10m (B4)", "20m (B4,B5,B6)","60m(B4,B5,B6)"]],
-					["CI_redEdge",["20m (B5,B7)","60m (B5,B7)"]],
-					["CI_greenEdge",["10m (B3)","20m (B3,B7)","60m (B3,B7)"]],
-					["EVI",["10m (B2,B3,B4)","20m (B2,B3,B4)", "60m (B2,B3,B4)"]],
-					["NRERI",["10m (B4)","20m (B5,B6,B7)", "60m (B5,B6,B7)"]],
-					["NDVI705",["20m (B5,B6)", "60m (B5,B6)"]],
-					["mNDVI705",["20m (B5,B6)", "60m (B1,B5,B6)"]],
-					["NDI45", ["10m (B4)", "20m (B4,B5)","60m (B4,B5)"]],
-					["RDVI", ["10m (B4)", "20m (B4,B7)","60m (B4,B7)"]],
-					["TCARI", ["10m (B3,B4)", "20m (B3,B4,B5)", "60m (B3,B4,B5)"]],
-					["OSAVI", ["10m (B4)", "20m (B4,B7)", "60m (B4,B7)"]],
-					["TCARI/OSAVI", ["10m (B3,B4)", "20m (B3,B4,B5,B7)", "60m (B3,B4,B5,B7)"]]
+		VI = [ ["Color",["10m (B3)"]],
+					["OTCI", ["10m (B4)"]],
+					["MCARI",["10m (B3,B4)"]],
+					["IRECI",["10m (B4)"]],
+					["CCCI",["20m (B5,B6,B7)"]],
+					["NDRE",["20m (B5,B6,B7)"]],
+					["MTCI", ["10m (B4)"]],
+					["CI_redEdge",["20m (B5,B7)"]],
+					["CI_greenEdge",["10m (B3)"]],
+					["EVI",["10m (B2,B3,B4)"]],
+					["NRERI",["10m (B4)"]],
+					["NDVI705",["20m (B5,B6)"]],
+					["mNDVI705",["20m (B5,B6)"]],
+					["NDI45", ["10m (B4)"]],
+					["RDVI", ["10m (B4)"]],
+					["TCARI", ["10m (B3,B4)"]],
+					["OSAVI", ["10m (B4)"]],
+					["TCARI/OSAVI", ["10m (B3,B4)"]],
+					["GRVI", ["10m (B8,B3)"]],
 					]
 
 		self.dlg.tableWidget.setRowCount(0)#Delete al rows before insert
@@ -565,6 +566,15 @@ class index_extractor:
 					if self.saveCSV:
 						Indexes.save2CSV(name,imagen)
 					imagen = mapper(imagen,2,max_uint16)
+					dst_dir = Indexes.saveImages(imagen,1,name)	
+					iface.addRasterLayer(dst_dir+'.tif', name)
+			elif index[0] == "GRVI":
+				for item in index[1]:
+					imagen, name = Indexes.GRVI(item)
+					name = name+str(time.time())
+					if self.saveCSV:
+						Indexes.save2CSV(name,imagen)
+					imagen = mapper(imagen,1,1)
 					dst_dir = Indexes.saveImages(imagen,1,name)	
 					iface.addRasterLayer(dst_dir+'.tif', name)
 			else:

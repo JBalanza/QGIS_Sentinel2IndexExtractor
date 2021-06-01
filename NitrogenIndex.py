@@ -20,30 +20,30 @@ class SpectralIndexes:
 	def __init__(self, route,puntos):
 		self.B1_60 = route[0]  # 443nm 60m
 		self.B2_10 = route[1]  # 490nm 10m
-		self.B2_20 = route[2]  # 490nm 20m
-		self.B2_60 = route[3]  # 490nm 60m
-		self.B3_10 = route[4]  # 560nm 10m
-		self.B3_20 = route[5]  # 560nm 20m
-		self.B3_60 = route[6]  # 560nm 60m
-		self.B4_10 = route[7]  # 665nm 10m
-		self.B4_20 = route[8]  # 665nm 20m
-		self.B4_60 = route[9]  # 665nm 60m
-		self.B5_20 = route[10]  # 705nm 20m
-		self.B5_60 = route[11]  # 705nm 60m
-		self.B6_20 = route[12]  # 740nm 20m
-		self.B6_60 = route[13]  # 740nm 60m
-		self.B7_20 = route[14]  # 783nm 20m
-		self.B7_60 = route[15]  # 783nm 60m
-		self.B8_10 = route[16] # 842nm 10m
-		self.B8a_20 = route[17]  # 865nm 20m
-		self.B8a_60 = route[18]  # 865nm 60m
-		self.B9_60 = route[19]  # 940nm 60m
+		#self.B2_20 = route[2]  # 490nm 20m
+		#self.B2_60 = route[3]  # 490nm 60m
+		self.B3_10 = route[2]  # 560nm 10m
+		#self.B3_20 = route[5]  # 560nm 20m
+		#self.B3_60 = route[6]  # 560nm 60m
+		self.B4_10 = route[3]  # 665nm 10m
+		#self.B4_20 = route[8]  # 665nm 20m
+		#self.B4_60 = route[9]  # 665nm 60m
+		self.B5_20 = route[4]  # 705nm 20m
+		#self.B5_60 = route[11]  # 705nm 60m
+		self.B6_20 = route[5]  # 740nm 20m
+		#self.B6_60 = route[13]  # 740nm 60m
+		self.B7_20 = route[6]  # 783nm 20m
+		#self.B7_60 = route[15]  # 783nm 60m
+		self.B8_10 = route[7] # 842nm 10m
+		#self.B8a_20 = route[17]  # 865nm 20m
+		#self.B8a_60 = route[18]  # 865nm 60m
+		self.B9_60 = route[8]  # 940nm 60m
 		#self.B10 = route[9]  # 1375nm
-		self.B11_20 = route[20]  # 1610nm 20m
-		self.B11_60 = route[21]  # 1610nm 60m
-		self.B12_20 = route[22]  # 2190nm 20m
-		self.B12_60 = route[23]  # 2190nm 60m
-		self.pwd = route[24] #PATH were we can work
+		self.B11_20 = route[9]  # 1610nm 20m
+		#self.B11_60 = route[21]  # 1610nm 60m
+		self.B12_20 = route[10]  # 2190nm 20m
+		#self.B12_60 = route[23]  # 2190nm 60m
+		self.pwd = route[11] #PATH were we can work
 
 		#Same for all
 		self.metadata = None
@@ -501,7 +501,14 @@ class SpectralIndexes:
 
 		return np.divide(resultado, np.sqrt(resultado)), nombre
 
+	def GRVI(self, resolution):
+		Band08 =self.openImageAndSaveMetadata(self.B8_10,0, True)
+		Band03=self.openImageAndSaveMetadata(self.B3_10,0)
+		nombre = "GNDVI_10m"
 
+		#METHOD
+
+		return np.divide(Band08, Band03), nombre
 
 	def TCARI(self, resolution):
 		if '10' in resolution:
@@ -739,23 +746,23 @@ def extract_data(route_zip):
 
 	files = zip_ref.namelist()
 	#bands avaibles on Sentinel-2
-	bands_list_extension = ["B01_60m",
-							"B02_10m","B02_20m","B02_60m",
-							"B03_10m","B03_20m","B03_60m",
-							"B04_10m","B04_20m","B04_60m",
-							"B05_20m","B05_60m",
-							"B06_20m","B06_60m",
-							"B07_20m","B07_60m",
-							"B08_10m","B8A_20m","B8A_60m",
-							"B09_60m",
-							"B11_20m","B11_60m",
-							"B12_20m","B12_60m"]
+	bands_list_extension = ["R60B01",
+							"R10B02",
+							"R10B03",
+							"R10B04",
+							"R20B05",
+							"R20B06",
+							"R20B07",
+							"R10B08",
+							"R60B09",
+							"R20B11",
+							"R20B12"]
 	bands_files = ["" for a in range(len(bands_list_extension))]#Initialise the list
 	for band in bands_list_extension:
 		for f in files:
-			if str(band) in str(f) and f.lower().endswith(('.png', '.jpg', '.jpeg', '.jp2')):
-				archive = route_dest+"/"+f
-				bands_files[band_index(band,bands_list_extension)] = archive
+			if str(band) in str(f) and f.lower().endswith(('.png', '.jpg', '.jpeg', '.jp2' ,'.tif')):
+					archive = route_dest+"/"+f
+					bands_files[band_index(band,bands_list_extension)] = archive
 
 	zip_ref.close()
 	if len(bands_files) != len(bands_list_extension):
